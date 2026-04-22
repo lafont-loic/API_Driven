@@ -71,6 +71,15 @@ Difficulté : Facile (~30 minutes)
 ---------------------------------------------------
 **Complétez et documentez ce fichier README.md** pour nous expliquer comment utiliser votre solution.  
 Faites preuve de pédagogie et soyez clair dans vos expliquations et processus de travail.  
+
+L'URL pour DÉMARRER le serveur (via une requête POST) :
+curl -X POST -H "Content-Type: application/json" -d '{"action": "start", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+
+L'URL pour STOPPER le serveur :
+curl -X POST -H "Content-Type: application/json" -d '{"action": "stop", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+
+[Bonus] L'URL pour voir le STATUS du serveur :
+curl -X POST -H "Content-Type: application/json" -d '{"action": "status", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
    
 ---------------------------------------------------
 Evaluation
