@@ -80,7 +80,69 @@ curl -X POST -H "Content-Type: application/json" -d '{"action": "stop", "instanc
 
 [Bonus] L'URL pour voir le STATUS du serveur :
 curl -X POST -H "Content-Type: application/json" -d '{"action": "status", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+
+
+Objectif du projet
+Ce projet a pour but de créer une architecture Cloud "Serverless" permettant de contrôler l'état d'un serveur Amazon EC2 (Démarrage, Arrêt, Statut) depuis l'extérieur, de manière totalement sécurisée, via une API REST. 
+
+Tout a été déployé et testé localement grâce à LocalStack et GitHub Codespaces.
+
+---
+
+Mon Processus de Travail
+
+Pour mener à bien ce projet, j'ai adopté une démarche itérative et rigoureuse :
+
+1. Compréhension et tests manuels : Avant de tout automatiser, j'ai d'abord tapé chaque commande awscli manuellement dans le terminal. L'objectif était de bien comprendre les dépendances strictes d'AWS : par exemple, on ne peut pas créer une fonction Lambda sans lui avoir d'abord créé un rôle IAM (sécurité), et on ne peut pas l'invoquer via une API sans lui ajouter une autorisation explicite (add-permission).
    
+2. Développement de la logique (Python) : J'ai rédigé le script lambda_function.py en utilisant la librairie boto3. J'ai structuré le code pour qu'il décode l'enveloppe JSON envoyée par l'API Gateway, lise l'argument action (start, stop, status) et renvoie une réponse HTTP formatée correctement (statusCode: 200).
+
+3. Automatisation (Infrastructure as Code) : Une fois l'architecture validée, j'ai regroupé toutes mes commandes dans un script bash (deploy.sh). Cela permet de détruire et recréer toute l'infrastructure (EC2, IAM, Lambda, API) en une seule commande, rendant le projet totalement reproductible.
+
+---
+
+Fonctionnement de l'architecture
+
+Pour être clair sur la façon dont les services communiquent entre eux, voici le parcours exact d'une requête lorsque vous utilisez l'API :
+
+* 1. Amazon API Gateway (Le point d'entrée) : L'API expose la ressource /instance. Elle est configurée avec une méthode POST, ce qui oblige l'utilisateur à envoyer des données (le JSON) pour agir. Elle bloque les simples requêtes GET des navigateurs web.
+* 2. AWS Lambda (Le cerveau logique) : C'est le code Python qui est réveillé par l'API. Il n'y a pas de serveur allumé en permanence pour faire tourner ce code, il ne s'exécute qu'à la demande (principe du Serverless).
+* 3. AWS IAM (La sécurité) : Par défaut, AWS bloque tout. La Lambda possède un "rôle d'exécution" qui lui donne la permission explicite et unique de communiquer avec le service EC2. Sans cela, la requête serait rejetée.
+* 4. Amazon EC2 (La cible) : C'est la machine virtuelle finale qui reçoit l'ordre de s'allumer ou de s'éteindre.
+
+---
+
+## Guide d'Utilisation : Tester la solution
+
+Le port 4566 est exposé publiquement sur mon Codespace. Vous pouvez exécuter ces commandes depuis n'importe quel terminal externe pour agir sur le serveur virtuel.
+
+(Note : L'identifiant de l'instance actuelle est i-4144cbf385855b166)
+
+### Démarrer le serveur
+` ` `bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"action": "start", "instance_id": "i-4144cbf385855b166"}' \
+  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+` ` `
+
+### Stopper le serveur
+` ` `bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"action": "stop", "instance_id": "i-4144cbf385855b166"}' \
+  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+` ` `
+
+### [BONUS] Voir le statut du serveur
+` ` `bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"action": "status", "instance_id": "i-4144cbf385855b166"}' \
+  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+` ` `
+
+
 ---------------------------------------------------
 Evaluation
 ---------------------------------------------------
