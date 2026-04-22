@@ -73,13 +73,13 @@ Difficulté : Facile (~30 minutes)
 Faites preuve de pédagogie et soyez clair dans vos expliquations et processus de travail.  
 
 L'URL pour DÉMARRER le serveur (via une requête POST) :
-curl -X POST -H "Content-Type: application/json" -d '{"action": "start", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"start\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 
 L'URL pour STOPPER le serveur :
-curl -X POST -H "Content-Type: application/json" -d '{"action": "stop", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"stop\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 
 [Bonus] L'URL pour voir le STATUS du serveur :
-curl -X POST -H "Content-Type: application/json" -d '{"action": "status", "instance_id": "i-4144cbf385855b166"}' https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"status\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 
 
 Objectif du projet
@@ -120,28 +120,18 @@ Le port 4566 est exposé publiquement sur mon Codespace. Vous pouvez exécuter c
 
 ### Démarrer le serveur
 ` ` `bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"action": "start", "instance_id": "i-4144cbf385855b166"}' \
-  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"start\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 ` ` `
 
 ### Stopper le serveur
 ` ` `bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"action": "stop", "instance_id": "i-4144cbf385855b166"}' \
-  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"stop\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 ` ` `
 
 ### [BONUS] Voir le statut du serveur
 ` ` `bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"action": "status", "instance_id": "i-4144cbf385855b166"}' \
-  https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
+curl -X POST -H "Content-Type: application/json" -d "{\"action\": \"status\", \"instance_id\": \"i-4144cbf385855b166\"}" https://ideal-pancake-pj5r69qppvp5c96pq-4566.app.github.dev/restapis/tmqm1tuygc/prod/_user_request_/instance
 ` ` `
-
 
 ---------------------------------------------------
 Evaluation
